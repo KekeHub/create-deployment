@@ -1,0 +1,41 @@
+import {getOctokit} from '@actions/github'
+
+interface Deployment {
+  id: number
+  description: string | null
+  environment: string
+  node_id: string
+  sha: string
+}
+
+export interface Options {
+  autoMerge: boolean
+  baseUrl?: string
+  owner: string
+  ref: string
+  repo: string
+  token: string
+}
+
+export class Agent {
+  #github
+
+  constructor(private opts: Options) {
+    this.#github = getOctokit(opts.token, {
+      baseUrl: opts.baseUrl
+    })
+  }
+
+  async run(): Promise<Deployment> {
+    const {ref, repo, owner, autoMerge} = this.opts
+
+    const res = await this.#github.rest.repos.createDeployment({
+      owner,
+      repo,
+      auto_merge: autoMerge,
+      ref
+    })
+
+    return res.data as Deployment
+  }
+}

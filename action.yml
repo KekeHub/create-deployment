@@ -1,0 +1,35 @@
+name: find-deployment
+description: Finds a GitHub deployment
+author: "KekeHub"
+inputs:
+  base-url:
+    required: false
+    description: "Base URL of the GitHub enterprises API"
+
+  auto-merge:
+    required: false
+    description: "Merge the latest branch if this branch is behind the base branch"
+    default: "false"
+
+  repository:
+    required: false
+    description: "Owner and the repository name"
+    default: ${{ github.repository }}
+
+  ref:
+    required: false
+    description: "Git hash for tag, commits etc"
+    default: ${{ github.sha }}
+
+  token:
+    required: false
+    description: "Credential to access the GitHub API"
+    default: ${{ github.token }}
+
+runs:
+  using: "node16"
+  main: "dist/index.js"
+
+branding:
+  icon: "archive"
+  color: "orange"
