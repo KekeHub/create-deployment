@@ -19,12 +19,14 @@ class Agent {
         });
     }
     async run() {
-        const { ref, repo, owner, autoMerge } = this.opts;
+        const { ref, repo, owner, autoMerge, transientEnvironment, productionEnvironment } = this.opts;
         const res = await this.#github.rest.repos.createDeployment({
             owner,
             repo,
             auto_merge: autoMerge,
-            ref
+            ref,
+            transient_environment: transientEnvironment,
+            production_environment: productionEnvironment
         });
         return res.data;
     }
@@ -75,6 +77,8 @@ async function run() {
             repo,
             autoMerge: core.getInput('auto-merge') === 'true' ? true : false,
             ref: core.getInput('ref', { required: true }),
+            productionEnvironment: core.getInput('production-environment') === 'true' ? true : false,
+            transientEnvironment: core.getInput('transient-environment') === 'true' ? true : false,
             token: core.getInput('token', { required: true })
         };
         const agent = new agent_1.Agent(opts);

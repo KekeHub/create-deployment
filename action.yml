@@ -11,6 +11,10 @@ inputs:
     description: "Merge the latest branch if this branch is behind the base branch"
     default: "false"
 
+  environment:
+    required: false
+    description: "Name of the environment that was deployment to"
+
   repository:
     required: false
     description: "Owner and the repository name"
@@ -21,10 +25,24 @@ inputs:
     description: "Git hash for tag, commits etc"
     default: ${{ github.sha }}
 
+  task:
+    required: true
+    description: "Name of the task for the deployment"
+
   token:
     required: false
     description: "Credential to access the GitHub API"
     default: ${{ github.token }}
+
+  transient_environment:
+    required: false
+    description: "Specifies if the given environment is specific to the deployment and will no longer exist at some point in the future."
+    default: "false"
+
+  production_environment:
+    required: false
+    description: "Specifies if the given environment is one that end-users directly interact with"
+    default: "false"
 
 runs:
   using: "node16"

@@ -14,6 +14,8 @@ export interface Options {
   owner: string
   ref: string
   repo: string
+  productionEnvironment: boolean
+  transientEnvironment: boolean
   token: string
 }
 
@@ -27,13 +29,22 @@ export class Agent {
   }
 
   async run(): Promise<Deployment> {
-    const {ref, repo, owner, autoMerge} = this.opts
+    const {
+      ref,
+      repo,
+      owner,
+      autoMerge,
+      transientEnvironment,
+      productionEnvironment
+    } = this.opts
 
     const res = await this.#github.rest.repos.createDeployment({
       owner,
       repo,
       auto_merge: autoMerge,
-      ref
+      ref,
+      transient_environment: transientEnvironment,
+      production_environment: productionEnvironment
     })
 
     return res.data as Deployment

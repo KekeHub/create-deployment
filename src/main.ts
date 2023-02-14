@@ -12,6 +12,10 @@ async function run(): Promise<void> {
       repo,
       autoMerge: core.getInput('auto-merge') === 'true' ? true : false,
       ref: core.getInput('ref', {required: true}),
+      productionEnvironment:
+        core.getInput('production-environment') === 'true' ? true : false,
+      transientEnvironment:
+        core.getInput('transient-environment') === 'true' ? true : false,
       token: core.getInput('token', {required: true})
     }
 
