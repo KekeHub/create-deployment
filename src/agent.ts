@@ -49,6 +49,7 @@ export class Agent {
       environment,
       auto_merge: autoMerge,
       ref,
+      required_contexts: [],
       transient_environment: transientEnvironment,
       production_environment: productionEnvironment
     })
