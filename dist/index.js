@@ -102,6 +102,7 @@ async function run() {
             .getInput('repository', { required: true })
             .split('/');
         const opts = {
+            baseUrl: core.getInput('base-url'),
             owner,
             repo,
             environment: core.getInput('environment'),

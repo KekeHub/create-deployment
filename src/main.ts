@@ -8,6 +8,7 @@ async function run(): Promise<void> {
       .split('/')
 
     const opts: Options = {
+      baseUrl: core.getInput('base-url'),
       owner,
       repo,
       environment: core.getInput('environment'),
