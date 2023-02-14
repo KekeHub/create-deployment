@@ -44,11 +44,12 @@ class Agent {
         });
     }
     async run() {
-        const { ref, repo, owner, autoMerge, transientEnvironment, productionEnvironment } = this.opts;
+        const { ref, repo, owner, autoMerge, environment, transientEnvironment, productionEnvironment } = this.opts;
         core.debug('creating environment');
         const { data } = await this.#github.rest.repos.createDeployment({
             owner,
             repo,
+            environment,
             auto_merge: autoMerge,
             ref,
             transient_environment: transientEnvironment,

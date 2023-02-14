@@ -37,6 +37,7 @@ export class Agent {
       repo,
       owner,
       autoMerge,
+      environment,
       transientEnvironment,
       productionEnvironment
     } = this.opts
@@ -45,6 +46,7 @@ export class Agent {
     const {data} = await this.#github.rest.repos.createDeployment({
       owner,
       repo,
+      environment,
       auto_merge: autoMerge,
       ref,
       transient_environment: transientEnvironment,
