@@ -1,4 +1,6 @@
+import * as core from '@actions/core'
 import {getOctokit} from '@actions/github'
+import {inspect} from 'util'
 
 interface Deployment {
   id: number
@@ -11,6 +13,7 @@ interface Deployment {
 export interface Options {
   autoMerge: boolean
   baseUrl?: string
+  environment?: string
   owner: string
   ref: string
   repo: string
@@ -34,19 +37,24 @@ export class Agent {
       repo,
       owner,
       autoMerge,
+      environment,
       transientEnvironment,
       productionEnvironment
     } = this.opts
 
-    const res = await this.#github.rest.repos.createDeployment({
+    core.debug('creating environment')
+    const {data} = await this.#github.rest.repos.createDeployment({
       owner,
       repo,
+      environment,
       auto_merge: autoMerge,
       ref,
+      required_contexts: [],
       transient_environment: transientEnvironment,
       production_environment: productionEnvironment
     })
 
-    return res.data as Deployment
+    core.debug(`Created environment ${inspect(data)}`)
+    return data as Deployment
   }
 }
