@@ -1,6 +1,6 @@
 name: Test
 on:
-  issues:
+  pull_request:
 
 jobs:
   build:
@@ -9,7 +9,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          app-installation-id: ${{ secrets.KEKEHUB_BOT_INSTALLATION_ID }}
-          app-integration-id: ${{ secrets.KEKEHUB_BOT_INTEGRATION_ID }}
-          app-private-key: ${{ secrets.KEKEHUB_BOT_PRIVATE_KEY }}
-          project-id: 1
+          environment: pr-${{ github.event.pull_request.number }}
+          ref: ${{ github.ref }}

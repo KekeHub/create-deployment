@@ -10,6 +10,7 @@ async function run(): Promise<void> {
     const opts: Options = {
       owner,
       repo,
+      environment: core.getInput('environment'),
       autoMerge: core.getInput('auto-merge') === 'true' ? true : false,
       ref: core.getInput('ref', {required: true}),
       productionEnvironment:
